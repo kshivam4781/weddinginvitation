@@ -1,0 +1,11 @@
+{
+  "title": "WeddingWebsite",
+  "description": "This wedding website serves as a personalized platform for Iffath Unnisa and Mohammed, providing guests with event details, RSVP options, and registry information.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

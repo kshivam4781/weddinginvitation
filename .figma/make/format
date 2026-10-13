@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# oxfmt 0.2 exits with status 2 when a path is not JavaScript or TypeScript
+# ("Expected at least one target file") and when it walks node_modules.
+# Figma runs this script on publish, sometimes with only CSS, HTML, or JSON.
+targets=()
+
+add_target() {
+  case "$1" in
+    .|./)
+      targets+=(src vite.config.ts)
+      ;;
+    node_modules|node_modules/*|*/node_modules|*/node_modules/*)
+      ;;
+    *.css|*.html|*.json|*.md|*.svg|*.png|*.jpg|*.jpeg|*.webp|*.gif|*.mp3|*.mp4|*.txt|*.toml|*.yaml|*.yml|*.lock)
+      ;;
+    *)
+      targets+=("$1")
+      ;;
+  esac
+}
+
+if [ "$#" -eq 0 ]; then
+  targets=(src vite.config.ts)
+else
+  for file in "$@"; do
+    add_target "$file"
+  done
+fi
+
+if [ "${#targets[@]}" -eq 0 ]; then
+  exit 0
+fi
+
+pnpm exec oxfmt "${targets[@]}"
