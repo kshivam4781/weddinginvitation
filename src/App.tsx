@@ -132,7 +132,7 @@ function AudioExperience() {
     <aside className={`audio-player ${isPlaying ? "playing" : ""}`}>
       <audio
         ref={audioElement}
-        src="/audio/bismillah-instrumental.mp3"
+        src={`${import.meta.env.BASE_URL}audio/bismillah-instrumental.mp3`}
         loop
         preload="auto"
       />
